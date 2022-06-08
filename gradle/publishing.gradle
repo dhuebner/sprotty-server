@@ -1,0 +1,98 @@
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+			pom {
+				afterEvaluate {
+					groupId project.group
+					artifactId project.name
+					version project.version
+					if (project.hasProperty('title')) {
+						name = project.title
+						description = project.description
+					}
+				}
+				
+				url = 'https://github.com/eclipse/sprotty-server'
+				
+				licenses {
+					license {
+						name = 'Eclipse Public License v2.0'
+						url = 'http://www.eclipse.org/legal/epl-2.0'
+					}
+				}
+				developers {
+					developer {
+						name = 'Jan Köhnlein'
+						email = 'jan.koehnlein@typefox.io'
+						organizationUrl = 'http://typefox.io'
+					}
+					developer {
+						name = 'Miro Spönemann'
+						email = 'miro.spoenemann@typefox.io'
+						organizationUrl = 'http://typefox.io'
+					}
+					developer {
+						name = 'Tom Vandenbussche'
+						email = 'tom.vandenbussche@sigasi.com'
+						organizationUrl = 'https://www.sigasi.com/'
+					}
+				}
+				scm {
+					connection = 'scm:git:git@github.com:eclipse/sprotty-server.git'
+					developerConnection = 'scm:git:git@github.com:eclipse/sprotty-server.git'
+					url = 'git@github.com:eclipse/sprotty-server.git'
+				}
+			}
+		}
+	}
+
+	repositories {
+		maven {
+			name = "OSSRH"
+			def releasesRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+			def snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+			/* Can be used in CI
+			credentials {
+				username = System.getenv('SONATYPE_USERNAME') ?: ''
+				password = System.getenv('SONATYPE_PASSWORD') ?: ''
+			}
+			*/
+			
+			/* 
+			*  Can be set in ~/.gradle/gradle.properties locally
+			*  
+			*  OSSRHUsername=<sonatype user>
+			*  OSSRHPassword=
+			*/
+			credentials(PasswordCredentials)
+			
+			url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+			// use this URL for local testing/debugging purposes
+			// url = "file:" + file("${rootDir}/build/maven-repository")
+		}
+	}
+
+	signing {
+		/*  Can be used in CI
+			def signingKey = findProperty("signingKey")
+			def signingPassword = findProperty("signingPassword")
+			useInMemoryPgpKeys(signingKey, signingPassword)
+		*/
+		
+		/* 
+		*  Can be set in ~/.gradle/gradle.properties locally
+		*  
+		*  signing.keyId=
+		*  signing.password=
+		*  signing.secretKeyRingFile=~/.gnupg/secring.gpg
+		*/
+		sign publishing.publications.mavenJava
+	}
+
+	javadoc {
+		if (JavaVersion.current().isJava9Compatible()) {
+			options.addBooleanOption('html5', true)
+		}
+	}
+}

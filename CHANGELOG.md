@@ -2,6 +2,14 @@
 
 This change log covers only the server part of Sprotty. See also the change logs of [sprotty](https://github.com/eclipse/sprotty/blob/master/CHANGELOG.md), [sprotty-theia](https://github.com/eclipse/sprotty-theia/blob/master/CHANGELOG.md) and [sprotty-layout](https://github.com/eclipse/sprotty-layout/blob/master/CHANGELOG.md).
 
+### v0.12.0 (Jun. 2022)
+
+New features:
+ * Dependencies update
+
+
+-----
+
 ### v0.9.0 (Aug. 2020)
 
 New features:
