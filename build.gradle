@@ -47,6 +47,10 @@ configure(subprojects.findAll {it.file('src').exists()}) {
 	apply plugin: 'maven-publish'
 	apply plugin: 'signing'
 	
+	java {
+		withJavadocJar()
+		withSourcesJar()
+	}
 	apply from: "${rootDir}/gradle/java-compiler-settings.gradle"
 	
 	

@@ -26,21 +26,6 @@ tasks.withType(Javadoc) {
 	options.addStringOption('Xdoclint:none', '-quiet')
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-	group 'Build'
-	description 'Assembles a jar archive containing the sources'
-	classifier = 'sources'
-	from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-	group 'Build'
-	description 'Assembles a jar archive containing the JavaDoc output'
-	classifier = 'javadoc'
-	from javadoc.destinationDir
-}
-
-artifacts.archives sourcesJar, javadocJar
 
 if (findProperty('ignoreTestFailures') == 'true') {
 	tasks.withType(Test) {
